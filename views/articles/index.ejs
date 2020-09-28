@@ -42,6 +42,7 @@
             <%= a.createdAt.toLocaleDateString() %>
           </div>
           <div class="card-text mb-2"><%= a.description %></div>
+          <a href="/articles/<%= a.id %>" class="btn btn-primary">Read more</a>
         </div>
       </div>
       <% }) %>
