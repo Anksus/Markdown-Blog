@@ -1,10 +1,15 @@
 const express = require("express");
-const { findByIdAndDelete } = require("./../models/article");
+const { findByIdAndDelete, findOne } = require("./../models/article");
 const router = express.Router();
 const Article = require("./../models/article");
 
 router.get("/new", (req, res) => {
   res.render("articles/new");
+});
+router.get("/edit:id", async (req, res) => {
+  const article = await findOne(req.params.id);
+
+  res.render("articles/edit", { article: article });
 });
 
 router.get("/:slug", async (req, res) => {
@@ -22,10 +27,10 @@ router.post("/", async (req, res) => {
   });
 
   try {
-    artic = await article.save();
-    res.redirect(`/articles/${artic.slug}`);
+    article = await article.save();
+    res.redirect(`/articles/${article.slug}`);
   } catch (e) {
-    res.render("/articles/new", { artic: artic });
+    res.render("/articles/new", { article: article });
   }
 });
 
